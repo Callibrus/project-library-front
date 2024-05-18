@@ -12,6 +12,10 @@ export default {
         getBooking: (id: Number) => `/booking/${id}`,
         createBooking: () => `/booking/create`,
         deleteBooking: (id: Number) => `/booking/delete/${id}`
+    },
+
+    authors: {
+        
     }
 
 }

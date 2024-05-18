@@ -8,9 +8,13 @@ export async function getBooks() {
     return new Promise<Book[]>((resolve, reject) => {
         axios.get(`${apiConfig.baseUrl}${endpoints.books.getBooks()}`)
             .then((response) => {
-                let data = response.data
-                // TODO: assertion that data is Book[]
-                resolve(data)
+                let data = response.data as Object[];
+                
+                data.forEach((b:any) => {
+                    b.datePublished = new Date(b.datePublished)
+                })
+
+                resolve(data as any)    
             })
             .catch(axiosError => reject(axiosError))
     })
@@ -19,8 +23,11 @@ export async function getBooks() {
 export async function getBook(id: number) {
     return new Promise<Book>((resolve, reject) => {
         axios.get(`${apiConfig.baseUrl}${endpoints.books.getBook(id)}`)
-            // TODO: assertion that response.data is Book[]
-            .then(response => resolve(response.data))
+            .then(response =>  {
+                const data = response.data;
+                data.datePublished = new Date(data.datePublished)
+                resolve(data)
+            })
             .catch(axiosError => reject(axiosError))
     })
 }
