@@ -38,6 +38,7 @@ const BookList = () => {
                         <Link to={`/book/${book.id}`}>
                             <img src={book.imageUrl ?? imagePlaceholder} alt={book.title}/>
                             <h2>{book.title}</h2>
+                            <p>{book?.authors.map(author => author.fullName).join(', ')}</p>
                         </Link>
                     </div>
                 ))}
