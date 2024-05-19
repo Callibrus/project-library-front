@@ -57,14 +57,16 @@ export async function deleteBook(id: number) {
 }
 
 export async function getBookings() {
+    console.log(`${BASE_URL}${endpoints.bookings.getBookings()}`)
     return new Promise<Booking[]>((resolve, reject) => {
-        axios.get(`${BASE_URL}${endpoints.bookings.getBookings}`)
+        axios.get(`${BASE_URL}${endpoints.bookings.getBookings()}`)
             .then(response => resolve(response.data))
             .catch(axiosError => reject(axiosError))
     })
 }
 
 export async function getBooking(id: number) {
+    console.log(`${BASE_URL}${endpoints.bookings.getBooking(id)}`)
     return new Promise<Booking>((resolve, reject) => {
         axios.get(`${BASE_URL}${endpoints.bookings.getBooking(id)}`)
             .then(response => resolve(response.data))
@@ -77,7 +79,7 @@ export async function createBooking(booking: {bookId: number, startTime: Date, e
     booking.startTime = new Date(booking.startTime.getTime() - (offset * 60 * 1000))
     booking.endTime = new Date(booking.endTime.getTime() - (offset * 60 * 1000))
     return new Promise((resolve, reject) => {
-        axios.post(`${BASE_URL}${endpoints.bookings.createBooking()}`,
+        axios.post(`http://109.120.134.98:8080/api/booking/create`,
                     {
                         bookId: booking.bookId,
                         startTime: booking.startTime.toISOString(),
@@ -91,7 +93,7 @@ export async function createBooking(booking: {bookId: number, startTime: Date, e
 
 export async function deleteBooking(id:number) {
     return new Promise<true>((resolve, reject) => {
-        axios.delete(`${BASE_URL}${endpoints.bookings.deleteBooking(id)}`)
+        axios.delete(`http://109.120.134.98:8080/api/booking/delete/${id}`)
             .then(() => resolve(true))
             .catch(axiosError => reject(axiosError))
     })
