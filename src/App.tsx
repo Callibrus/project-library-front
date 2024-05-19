@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState }  from "react"
-import { getBooks} from './api'
+import { createBooking, getBookings, getBooks} from './api'
 import { Book } from './types';
 
 const imagePlaceHlolder = "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1553383690i/2657.jpg"
@@ -13,6 +13,16 @@ function App() {
         getBooks()
             .then((data) => { setBooks(data); console.log(data)} )
             .catch((e: any) => console.error(e));
+
+        // createBooking({
+        //     bookId: 1,
+        //     startTime: new Date(),
+        //     endTime: new Date(),
+        //     username: "test"
+        // })
+        getBookings()
+        .then(console.log)
+        .catch(console.error)
     }, []);
 
     // const books = [

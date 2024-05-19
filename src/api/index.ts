@@ -72,10 +72,21 @@ export async function getBooking(id: number) {
     })
 }
 
-export async function createBooking(data: Booking) {
-    throw new Error("NOT IMPLEMENTED YET")
-    data;
-    return;
+export async function createBooking(booking: {bookId: number, startTime: Date, endTime: Date, username: string, id?: number }) {
+    const offset = booking.startTime.getTimezoneOffset()
+    booking.startTime = new Date(booking.startTime.getTime() - (offset * 60 * 1000))
+    booking.endTime = new Date(booking.endTime.getTime() - (offset * 60 * 1000))
+    return new Promise((resolve, reject) => {
+        axios.post(`${BASE_URL}${endpoints.bookings.createBooking()}`,
+                    {
+                        bookId: booking.bookId,
+                        startTime: booking.startTime.toISOString(),
+                        endTime: booking.endTime.toISOString(),
+                        userName: booking.username
+                    })
+                    .then(response => resolve(response.data))
+                    .catch(axiosError => reject(axiosError))
+    });
 }
 
 export async function deleteBooking(id:number) {
