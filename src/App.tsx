@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState }  from "react"
-import {getBook, getBooks} from './api'
-import { Book } from './types/types';
+import { getBooks} from './api'
+import { Book } from './types';
 
 const imagePlaceHlolder = "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1553383690i/2657.jpg"
 

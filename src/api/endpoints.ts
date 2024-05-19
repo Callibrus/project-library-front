@@ -15,7 +15,10 @@ export default {
     },
 
     authors: {
-        
+        getAuthors: () => `/authors`,
+        getAuthor: (id: number) => `/author/${id}`,
+        updateAuthor: (id: number) => `/author/${id}`,
+        createAuthor: () => `/author/create`,
+        deleteAuthor: (id: number) => `/author/delete${id}`
     }
-
 }
