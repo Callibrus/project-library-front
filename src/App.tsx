@@ -3,6 +3,7 @@ import './App.css';
 import BookList from './BookList';
 import BookDetail from './BookDetail';
 import BookReservation from './BookReservation.tsx';
+import BookAuthor from './BookAuthor.tsx';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/book/:id" element={<BookDetail  />} />
                         <Route path="/BookReservation/:id" element={<BookReservation />} />
                         <Route path="/BookDetail/:id" element={<BookDetail />} />
+                        <Route path="/BookAuthor/:id" element={<BookAuthor />} />
                     </Routes>
                 </div>
             </div>

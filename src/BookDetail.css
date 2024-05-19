@@ -87,9 +87,9 @@ p {
     font-size: 10px;
 }
 .author-info img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+
 }
 
 .buttons {
@@ -98,27 +98,16 @@ p {
     margin-top: auto;
 }
 
-.buttons .save {
+.buttons .reserve {
     display: flex;
     width: 133px;
     padding: 13px 28px;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-radius: 20px 0px 0px 20px;
+    border-radius: 20px;
     background: #F1F1F1;
     color: #0D4B68;
-}
-.buttons .reserve {
-    color: white;
-    display: flex;
-    padding: 13px 29px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 0px 20px 20px 0px;
-    background: #125C7F;
-    text-decoration: none;
     transition: background-color 0.3s ease-in-out;
 }
 .buttons .reserve:hover{
@@ -181,6 +170,9 @@ p {
     width: 300px;
     height: 100px;
     display: flex;
+    justify-content: center;
+    padding-left: 10px;
+    align-items: center;
     margin-bottom: 20px;
     border-radius: 20px;
     background: #F1F1F1;
@@ -208,7 +200,7 @@ p {
 }
 
 .comment_content h3 {
-    margin: 10px 0 0 0;
+    margin: 0 0 0 0;
     color: #0D4B68;
 }
 

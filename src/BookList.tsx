@@ -21,14 +21,14 @@ const BookList = () => {
             <div className="navigation_panel">
                 <div className="navigation">
                     <ul>
-                        <li>Рекомендації</li>
-                        <li>Популярні</li>
+                        <li>Recommendations</li>
+                        <li>Popular</li>
                     </ul>
                 </div>
 
                 <div className="search-block">
                     <input type="text" placeholder="Search..."/>
-                    <button>Знайти</button>
+                    <button>Find</button>
                 </div>
             </div>
             <div className="books_wrapper">

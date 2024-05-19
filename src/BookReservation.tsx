@@ -8,21 +8,17 @@ import { createBooking, getBook, getBookingsForBook } from './api';
 
 const imagePlaceholder = "assets/book.jpg";
 
-
-
 const BookDetail = () => {
-
-    
     const [book, setBook] = useState<Book>()
-    
-    const { id } = useParams()
-    
-    const [bookings, setBookings] = useState<Booking[]>([])
 
+    const { id } = useParams()
+
+    const [bookings, setBookings] = useState<Booking[]>([])
     useEffect(() => {
-        getBook(id === undefined ? 1 : +id).then(data => setBook(data)).catch(console.error);
-        getBookingsForBook(id === undefined ? 1 : +id).then(data => setBookings(data)).catch(console.error);
-    }, [])
+        const bookId = id === undefined ? 1 : +id;
+        getBook(bookId).then(data => setBook(data)).catch(console.error);
+        getBookingsForBook(bookId).then(data => setBookings(data)).catch(console.error);
+    }, [id]);
 
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [endDate, setEndDate] = useState<Date | null>(null);
@@ -41,27 +37,54 @@ const BookDetail = () => {
     };
 
     const reserve = () => {
-        // TODO: check for valid date input
-        createBooking({
-            bookId: id === undefined ? 1 : +id,
-            startTime: startDate,
-            endTime: endDate as Date,
-            username: "" // TODO: username field
-        })
-    }
+        if (startDate && endDate) {
+            createBooking({
+                bookId: id === undefined ? 1 : +id,
+                startTime: startDate,
+                endTime: endDate,
+                username: "" // TODO: username field
+            }).then(() => {
+                alert('Reservation successful!');
 
+                getBookingsForBook(id === undefined ? 1 : +id).then(data => setBookings(data)).catch(console.error);
+            }).catch(error => {
+                console.error('Error creating booking:', error);
+                alert('Failed to create reservation.');
+            });
+        } else {
+            alert('Please select valid start and end dates.');
+        }
+    };
+
+
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: book?.title,
+                    text: book?.description,
+                    url: window.location.href,
+                });
+                console.log('Content shared successfully');
+            } catch (error) {
+                console.error('Error sharing content:', error);
+            }
+        } else {
+            console.error('Web Share API is not supported in this browser');
+        }
+    };
 
     return (
         <div className="book-content">
             <div className="top-bar">
                 <Link to={`/BookDetail/${id}`} className="back-button">&#10094;</Link>
-                <button className="share-button">Поділитися</button>
+                <button className="share-button" onClick={handleShare}>Share</button>
             </div>
 
             <div className="book_detail">
                 <div className="left-section">
                     <div className="image-container">
-                        <img src={book?.imageUrl ?? imagePlaceholder} alt={book?.title}/>
+                        <img src={book?.imageUrl ?? imagePlaceholder} alt={book?.title} />
                     </div>
                     <div className="book__nav">
                         <div className="buttons">
@@ -76,7 +99,7 @@ const BookDetail = () => {
                     <p>Published: {book?.datePublished.toLocaleDateString()}</p>
                     <p>Genre: {book?.genre}</p>
                     <div>
-                        <hr className="horizontal-line"/>
+                        <hr className="horizontal-line" />
                     </div>
                     <div className="reservation">
                         <div className="date-picker">
@@ -86,6 +109,16 @@ const BookDetail = () => {
                                 onChange={handleStartDateChange}
                                 dateFormat="dd/MM/yyyy"
                                 id="startDate"
+                                excludeDates={bookings.flatMap(booking => {
+                                    const dates = [];
+                                    const currentDate = new Date(booking.startTime);
+                                    const endDate = new Date(booking.endTime);
+                                    while (currentDate <= endDate) {
+                                        dates.push(new Date(currentDate));
+                                        currentDate.setDate(currentDate.getDate() + 1);
+                                    }
+                                    return dates;
+                                })}
                             />
                         </div>
                         <div className="date-picker">
@@ -95,6 +128,16 @@ const BookDetail = () => {
                                 onChange={handleEndDateChange}
                                 dateFormat="dd/MM/yyyy"
                                 id="endDate"
+                                excludeDates={bookings.flatMap(booking => {
+                                    const dates = [];
+                                    const currentDate = new Date(booking.startTime);
+                                    const endDate = new Date(booking.endTime);
+                                    while (currentDate <= endDate) {
+                                        dates.push(new Date(currentDate));
+                                        currentDate.setDate(currentDate.getDate() + 1);
+                                    }
+                                    return dates;
+                                })}
                             />
                         </div>
                         <div className="reminder-checkbox">
@@ -109,8 +152,6 @@ const BookDetail = () => {
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 };
