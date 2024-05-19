@@ -3,8 +3,8 @@ export default {
         getBooks: () => `/books`,
         getBook: (id: Number) =>  `/book/${id}`,
         createBook: () => `/book/create`,
-        updateBook: (id: Number) => `/book/${id}`,
-        deleteBook: (id: Number) => `/book/${id}`,
+        updateBook: (id: Number) => `/book/update/${id}`,
+        deleteBook: (id: Number) => `/book/delete/${id}`,
     },
 
     bookings: {
@@ -15,7 +15,10 @@ export default {
     },
 
     authors: {
-        
+        getAuthors: () => `/authors`,
+        getAuthor: (id: number) => `/author/${id}`,
+        updateAuthor: (id: number) => `/author/update/${id}`,
+        createAuthor: () => `/author/create`,
+        deleteAuthor: (id: number) => `/author/delete${id}`
     }
-
 }

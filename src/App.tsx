@@ -1,7 +1,3 @@
-
-// import { useEffect, useState }  from "react"
-// import {getBook, getBooks} from './api'
-// import { Book } from './types/types';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import BookList from './BookList';
@@ -9,6 +5,7 @@ import BookDetail from './BookDetail';
 import BookReservation from './BookReservation.tsx';
 
 function App() {
+
     return (
         <Router>
             <div className="app">
