@@ -1,33 +1,20 @@
 import './BookList.css';
 import { Link } from 'react-router-dom';
-// import { useEffect, useState }  from "react"
-// import {getBook, getBooks} from './api'
-// import { Book } from './types/types';
+import { useEffect, useState }  from "react"
+import { getBooks} from './api'
+import { Book } from './types';
 
 const imagePlaceholder = "assets/book.jpg";
 
 
 const BookList = () => {
-    // const [books, setBooks] = useState<Book[]>([]);
-    //
-    // useEffect(() => {
-    //     getBooks()
-    //         .then((data) => { setBooks(data); console.log(data)} )
-    //         .catch((e: any) => console.error(e));
-    // }, []);
-
-    const books = [
-        { id: 1, title: 'Book Title 1', author: 'Author 1', imageUrl: 'assets/book.jpg' },
-        { id: 2, title: 'Book Title 2', author: 'Author 2', imageUrl: 'assets/book.jpg' },
-        { id: 3, title: 'Book Title 3', author: 'Author 3', imageUrl: 'assets/book.jpg' },
-        { id: 4, title: 'Book Title 4', author: 'Author 4', imageUrl: 'assets/book.jpg' },
-        { id: 5, title: 'Book Title 5', author: 'Author 5', imageUrl: 'assets/book.jpg' },
-        { id: 6, title: 'Book Title 6', author: 'Author 6', imageUrl: 'assets/book.jpg' },
-        { id: 7, title: 'Book Title 7', author: 'Author 7', imageUrl: 'assets/book.jpg' },
-        { id: 8, title: 'Book Title 8', author: 'Author 8', imageUrl: 'assets/book.jpg' },
-        { id: 9, title: 'Book Title 9', author: 'Author 9', imageUrl: 'assets/book.jpg' },
-        { id: 10, title: 'Book Title 10', author: 'Author 10', imageUrl: 'assets/book.jpg' },
-    ];
+    const [books, setBooks] = useState<Book[]>([]);
+    
+    useEffect(() => {
+        getBooks()
+            .then((data) => { setBooks(data); console.log(data)} )
+            .catch((e: any) => console.error(e));
+    }, []);
 
     return (
         <div className="book-content">

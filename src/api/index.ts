@@ -2,11 +2,12 @@ import axios from "axios";
 import apiConfig from "./apiConfig";
 import endpoints from "./endpoints";
 import { Author, Book, Booking } from "../types";
+import { rejects } from "assert";
 
 const BASE_URL = apiConfig.baseUrl;
 
 export async function getBooks() {
-    return new Promise<Book[]>((resolve, reject) => {
+    return new Promise<(Book)[]>((resolve, reject) => {
         axios.get(`${BASE_URL}${endpoints.books.getBooks()}`)
             .then((response) => {
                 let data = response.data as Object[];
@@ -98,6 +99,22 @@ export async function deleteBooking(id:number) {
             .catch(axiosError => reject(axiosError))
     })
 }
+
+export async function getBookingsForBook(id: number) {
+    return new Promise<Booking[]>((resolve, reject) => {
+        axios.get(`${BASE_URL}${endpoints.bookings.getBookingsForBook(id)}`)
+            .then(response => {
+                const data = response.data as Booking[]
+                data.forEach(booking => {
+                    booking.startTime = new Date(booking.startTime)
+                    booking.endTime = new Date(booking.endTime)
+                })
+                resolve(data)
+            })
+            .catch(axiosError => reject(axiosError));
+    })
+}
+
 
 
 export async function getAuthors() {

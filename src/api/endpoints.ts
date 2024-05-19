@@ -1,3 +1,5 @@
+import { getBookingsForBook } from ".";
+
 export default {
     books: {
         getBooks: () => `/books`,
@@ -11,7 +13,8 @@ export default {
         getBookings: () => `/bookings`,
         getBooking: (id: Number) => `/booking/${id}`,
         createBooking: () => `/booking/create`,
-        deleteBooking: (id: Number) => `/booking/delete/${id}`
+        deleteBooking: (id: Number) => `/booking/delete/${id}`,
+        getBookingsForBook: (id: Number) => `/bookings/bookId=${id}`
     },
 
     authors: {
