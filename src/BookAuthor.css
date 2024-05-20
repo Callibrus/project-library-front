@@ -1,0 +1,22 @@
+
+
+.author_detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.left-section,
+.right-section {
+    margin: 20px;
+}
+.left-section2 .image-container {}
+#biography {
+    color: #0D4B68;
+}
+
+h3 {
+    color: #002038;
+    margin: 20px 0;
+}
