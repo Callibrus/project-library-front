@@ -47,7 +47,7 @@ const BookDetail = () => {
                 bookId: id === undefined ? 1 : +id,
                 startTime: startDate,
                 endTime: endDate,
-                username: username
+                userName: username
             }).then(() => {
                 alert('Reservation successful!');
 

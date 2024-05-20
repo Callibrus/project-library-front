@@ -2,7 +2,6 @@ import axios from "axios";
 import apiConfig from "./apiConfig";
 import endpoints from "./endpoints";
 import { Author, Book, Booking } from "../types";
-import { rejects } from "assert";
 
 const BASE_URL = apiConfig.baseUrl;
 
@@ -76,10 +75,21 @@ export async function getBooking(id: number) {
     })
 }
 
-export async function createBooking(data: Booking) {
-    console.error("NOT IMPLEMENTED YET")
-    data;
-    return;
+export async function createBooking(booking: { bookId: number, startTime: Date, endTime: Date, userName: string, id?: number }) {
+    const offset = booking.startTime.getTimezoneOffset()
+    booking.startTime = new Date(booking.startTime.getTime() - (offset * 60 * 1000))
+    booking.endTime = new Date(booking.endTime.getTime() - (offset * 60 * 1000))
+    return new Promise((resolve, reject) => {
+        axios.post(`http://109.120.134.98:8080/api/booking/create`,
+            {
+                bookId: booking.bookId,
+                startTime: booking.startTime.toISOString(),
+                endTime: booking.endTime.toISOString(),
+                userName: booking.userName
+            })
+            .then(response => resolve(response.data))
+            .catch(axiosError => reject(axiosError))
+    });
 }
 
 export async function deleteBooking(id:number) {
