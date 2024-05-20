@@ -91,32 +91,6 @@ const BookDetail = () => {
                 </div>
             </div>
 
-            <div className="reviews">
-                <h2>Reviews</h2>
-                <div className="rating"></div>
-                <div className="comments">
-                    <div className="comment_wrapper">
-                        <div className="avatar">
-                            <img width="30" height="30"
-                                 src="https://img.icons8.com/ios-glyphs/30/000000/person-male.png" alt="person-male"/>
-                        </div>
-                        <div className="comment_content">
-                        <h3>John Doe</h3>
-                            <p>Main text of the comment goes here...</p>
-                        </div>
-                    </div>
-                    <div className="comment_wrapper">
-                        <div className="avatar">
-                            <img width="30" height="30"
-                                 src="https://img.icons8.com/ios-glyphs/30/000000/person-male.png" alt="person-male"/>
-                        </div>
-                        <div className="comment_content">
-                        <h3>Jane Smith</h3>
-                            <p>Main text of the comment goes here...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };
