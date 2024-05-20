@@ -2,15 +2,15 @@ import './BookList.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react"
 import { getBooks } from './api'
-import { Book } from './types';
+import { BookWithAuthors } from './types';
 
 const imagePlaceholder = "assets/book.jpg";
 
 
 const BookList = () => {
-    const [books, setBooks] = useState<Book[]>([]);
+    const [books, setBooks] = useState<BookWithAuthors[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+    const [filteredBooks, setFilteredBooks] = useState<BookWithAuthors[]>([]);
 
     useEffect(() => {
         getBooks()

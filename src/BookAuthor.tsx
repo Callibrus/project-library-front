@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react';
-import {Book} from './types';
+import { BookWithAuthors} from './types';
 import {Link, useParams} from 'react-router-dom';
 import './BookAuthor.css';
 import {getBook} from './api';
 
 
 const BookDetail = () => {
-    const [book, setBook] = useState<Book>();
+    const [book, setBook] = useState<BookWithAuthors>();
     const {id} = useParams();
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Book } from './types';
+import { BookWithAuthors } from './types';
 import { Link, useParams } from 'react-router-dom';
 import './BookDetail.css';
 import { getBook } from './api';
@@ -7,7 +7,7 @@ import { getBook } from './api';
 const imagePlaceholder = "assets/book.jpg";
 
 const BookDetail = () => {
-    const [book, setBook] = useState<Book>();
+    const [book, setBook] = useState<BookWithAuthors>();
     const { id } = useParams();
 
     useEffect(() => {
