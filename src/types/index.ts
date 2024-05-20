@@ -6,7 +6,6 @@ export type Book = {
     availableCopies: number,
     genre:           string,
     imageUrl:        string,
-    authors:         Author[]
 }
 
 
@@ -26,3 +25,7 @@ export type Booking = {
     bookId: number,
     userName: string
 }
+
+
+export type BookWithAuthors = Book & {authors: Author[]}
+export type AuthorWithBooks = Author & {books: Book[]}

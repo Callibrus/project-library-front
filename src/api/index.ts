@@ -1,18 +1,22 @@
 import axios from "axios";
 import apiConfig from "./apiConfig";
 import endpoints from "./endpoints";
-import { Author, Book, Booking } from "../types";
+import { Author, AuthorWithBooks, Book, BookWithAuthors, Booking } from "../types";
 
 const BASE_URL = apiConfig.baseUrl;
 
 export async function getBooks() {
-    return new Promise<(Book)[]>((resolve, reject) => {
+    return new Promise<BookWithAuthors[]>((resolve, reject) => {
         axios.get(`${BASE_URL}${endpoints.books.getBooks()}`)
             .then((response) => {
-                let data = response.data as Object[];
+                let data = response.data as (Book & { authors: Author[] })[];
                 
-                data.forEach((b:any) => {
+                data.forEach((b) => {
                     b.datePublished = new Date(b.datePublished)
+                    b.authors.forEach(author => {
+                        author.birthDate = new Date(author.birthDate);
+                        author.deathDate = author.deathDate ? new Date(author.deathDate) : null;
+                    })
                 })
 
                 resolve(data as any)    
@@ -22,11 +26,15 @@ export async function getBooks() {
 }
 
 export async function getBook(id: number) {
-    return new Promise<Book>((resolve, reject) => {
+    return new Promise<BookWithAuthors>((resolve, reject) => {
         axios.get(`${BASE_URL}${endpoints.books.getBook(id)}`)
             .then(response =>  {
-                const data = response.data;
+                const data = response.data as BookWithAuthors;
                 data.datePublished = new Date(data.datePublished)
+                data.authors.forEach((author) => {
+                    author.birthDate = new Date(author.birthDate);
+                    author.deathDate = author.deathDate ? new Date(author.deathDate) : null;
+                })
                 resolve(data)
             })
             .catch(axiosError => reject(axiosError))
@@ -117,13 +125,16 @@ export async function getBookingsForBook(id: number) {
 
 
 export async function getAuthors() {
-    return new Promise<Author[]>((resolve, reject) => {
+    return new Promise<AuthorWithBooks[]>((resolve, reject) => {
         axios.get(`${BASE_URL}${endpoints.authors.getAuthors}`)
             .then((response) => {
-                const data = response.data as Author[]
+                const data = response.data as AuthorWithBooks[]
                 data.forEach((author) => {
                     author.birthDate = new Date(author.birthDate);
                     author.deathDate = author.deathDate ? new Date(author.deathDate) : null;
+                    author.books.forEach(book => {
+                        book.datePublished = new Date(book.datePublished)
+                    }) 
                 })
 
                 resolve(data);
@@ -133,12 +144,15 @@ export async function getAuthors() {
 }
 
 export async function getAuthor(id: number) {
-    return new Promise<Author>((resolve, reject) => {
+    return new Promise<AuthorWithBooks>((resolve, reject) => {
         axios.get(`${BASE_URL}${endpoints.authors.getAuthor(id)}`)
             .then(respose => {
-                const data = respose.data as Author;
+                const data = respose.data as AuthorWithBooks;
                 data.birthDate = new Date(data.birthDate);
                 data.deathDate = data.deathDate ? new Date(data.deathDate) : null;
+                data.books.forEach(book => {
+                    book.datePublished = new Date(book.datePublished);
+                })
                 resolve(data)
             })
             .catch(axiosError => reject(axiosError))

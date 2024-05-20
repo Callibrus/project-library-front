@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from 'react';
-import { Book, Booking } from './types';
+import { BookWithAuthors, Booking } from './types';
 import { Link, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -9,7 +9,7 @@ import { createBooking, getBook, getBookingsForBook } from './api';
 const imagePlaceholder = "assets/book.jpg";
 
 const BookDetail = () => {
-    const [book, setBook] = useState<Book>();
+    const [book, setBook] = useState<BookWithAuthors>();
 
     const { id } = useParams();
 
