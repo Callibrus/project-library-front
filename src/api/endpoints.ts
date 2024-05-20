@@ -1,5 +1,3 @@
-import { getBookingsForBook } from ".";
-
 export default {
     books: {
         getBooks: () => `/books`,

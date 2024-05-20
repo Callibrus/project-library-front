@@ -9,11 +9,11 @@ import { createBooking, getBook, getBookingsForBook } from './api';
 const imagePlaceholder = "assets/book.jpg";
 
 const BookDetail = () => {
-    const [book, setBook] = useState<Book>()
+    const [book, setBook] = useState<Book>();
 
-    const { id } = useParams()
+    const { id } = useParams();
 
-    const [bookings, setBookings] = useState<Booking[]>([])
+    const [bookings, setBookings] = useState<Booking[]>([]);
     useEffect(() => {
         const bookId = id === undefined ? 1 : +id;
         getBook(bookId).then(data => setBook(data)).catch(console.error);
@@ -23,6 +23,7 @@ const BookDetail = () => {
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [reminder, setReminder] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("");
 
     const handleStartDateChange = (date: Date) => {
         setStartDate(date);
@@ -36,13 +37,17 @@ const BookDetail = () => {
         setReminder(e.target.checked);
     };
 
+    const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
+    };
+
     const reserve = () => {
-        if (startDate && endDate) {
+        if (startDate && endDate && username) {
             createBooking({
                 bookId: id === undefined ? 1 : +id,
                 startTime: startDate,
                 endTime: endDate,
-                username: "" // TODO: username field
+                username: username
             }).then(() => {
                 alert('Reservation successful!');
 
@@ -52,10 +57,9 @@ const BookDetail = () => {
                 alert('Failed to create reservation.');
             });
         } else {
-            alert('Please select valid start and end dates.');
+            alert('Please fill in all fields.');
         }
     };
-
 
     const handleShare = async () => {
         if (navigator.share) {
@@ -102,6 +106,14 @@ const BookDetail = () => {
                         <hr className="horizontal-line" />
                     </div>
                     <div className="reservation">
+                        <div >
+                            <input
+                                className="username-input"
+                                type="text"
+                                placeholder="Username"
+                                onChange={handleUsernameChange}
+                            />
+                        </div>
                         <div className="date-picker">
                             <label htmlFor="startDate">Pick up date:</label>
                             <DatePicker
@@ -109,6 +121,7 @@ const BookDetail = () => {
                                 onChange={handleStartDateChange}
                                 dateFormat="dd/MM/yyyy"
                                 id="startDate"
+                                minDate={new Date()}
                                 excludeDates={bookings.flatMap(booking => {
                                     const dates = [];
                                     const currentDate = new Date(booking.startTime);
@@ -128,6 +141,7 @@ const BookDetail = () => {
                                 onChange={handleEndDateChange}
                                 dateFormat="dd/MM/yyyy"
                                 id="endDate"
+                                minDate={new Date()}
                                 excludeDates={bookings.flatMap(booking => {
                                     const dates = [];
                                     const currentDate = new Date(booking.startTime);

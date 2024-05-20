@@ -24,7 +24,7 @@ const BookDetail = () => {
                 <div className="left-section">
                     <div className="image-container">
                         {book && book.authors && book.authors[0] && (
-                            <img src={book.authors[0].imageUrl} alt={book.authors[0].fullName}/>
+                            <img src={book.authors[0].imageUrl ?? ""} alt={book.authors[0].fullName}/>
                         )}
 
 

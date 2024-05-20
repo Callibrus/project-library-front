@@ -2,7 +2,6 @@ import axios from "axios";
 import apiConfig from "./apiConfig";
 import endpoints from "./endpoints";
 import { Author, Book, Booking } from "../types";
-import { rejects } from "assert";
 
 const BASE_URL = apiConfig.baseUrl;
 

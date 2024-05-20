@@ -1,7 +1,7 @@
 import './BookList.css';
 import { Link } from 'react-router-dom';
-import { useEffect, useState }  from "react"
-import { getBooks} from './api'
+import { useEffect, useState } from "react"
+import { getBooks } from './api'
 import { Book } from './types';
 
 const imagePlaceholder = "assets/book.jpg";
@@ -9,12 +9,30 @@ const imagePlaceholder = "assets/book.jpg";
 
 const BookList = () => {
     const [books, setBooks] = useState<Book[]>([]);
-    
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+
     useEffect(() => {
         getBooks()
-            .then((data) => { setBooks(data); console.log(data)} )
+            .then((data) => {
+                setBooks(data);
+                setFilteredBooks(data);
+                console.log(data);
+            })
             .catch((e: any) => console.error(e));
     }, []);
+
+    function handleSearch() {
+        if (searchTerm === "") {
+            setFilteredBooks(books);
+        } else {
+            const filtered = books.filter(book =>
+                book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                book.authors.some(author => author.fullName.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+            setFilteredBooks(filtered);
+        }
+    }
 
     return (
         <div className="book-content">
@@ -27,16 +45,21 @@ const BookList = () => {
                 </div>
 
                 <div className="search-block">
-                    <input type="text" placeholder="Search..."/>
-                    <button>Find</button>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button onClick={handleSearch}>Find</button>
                 </div>
             </div>
             <div className="books_wrapper">
 
-                {books.map((book) => (
+                {filteredBooks.map((book) => (
                     <div key={book.id} className="book">
                         <Link to={`/book/${book.id}`}>
-                            <img src={book.imageUrl ?? imagePlaceholder} alt={book.title}/>
+                            <img src={book.imageUrl ?? imagePlaceholder} alt={book.title} />
                             <h2>{book.title}</h2>
                             <p>{book?.authors.map(author => author.fullName).join(', ')}</p>
                         </Link>

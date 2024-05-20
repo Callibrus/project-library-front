@@ -9,6 +9,9 @@
     height: auto;
 }
 
+input {
+    color: black
+}
 
 .navigation_panel {
     display: flex;
