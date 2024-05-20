@@ -33,8 +33,8 @@ export async function getBook(id: number) {
 }
 
 export async function createBook(id: number) {
-    console.error("NOT YET IMPLEMENTED")
-    return;
+    // console.error("NOT YET IMPLEMENTED")
+    // return;
     return new Promise<Book>((resolve, reject) => {
         axios(`${apiConfig.baseUrl}${endpoints.books.getBook(id)}`)
             .then(data => resolve(data.data))
@@ -76,9 +76,11 @@ export async function getBooking(id: number) {
 }
 
 export async function createBooking(data: Booking) {
-    console.error("NOT IMPLEMENTED YET")
-    data;
-    return;
+    return new Promise<Book>((resolve, reject) => {
+        axios.post(`http://109.120.134.98:8080/api/booking/create`, data)
+            .then(data => resolve(data.data))
+            .catch(axiosError => reject(axiosError))
+    })
 }
 
 export async function deleteBooking(id:number) {
