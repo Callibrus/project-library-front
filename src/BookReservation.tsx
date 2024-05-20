@@ -85,7 +85,7 @@ const BookDetail = () => {
                 <button className="share-button" onClick={handleShare}>Share</button>
             </div>
 
-            <div className="book_detail">
+            <div className="book_detail2">
                 <div className="left-section">
                     <div className="image-container">
                         <img src={book?.imageUrl ?? imagePlaceholder} alt={book?.title} />

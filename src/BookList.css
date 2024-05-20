@@ -36,7 +36,6 @@ input {
 }
 
 
-
 .search-block {
     width: 20%;
     padding: 20px;
@@ -67,8 +66,6 @@ input {
 .search-block button:hover {
     background-color: #083d53;
 }
-
-
 
 
 .books_wrapper {
@@ -103,4 +100,25 @@ input {
     color: #555;
     margin: 0;
 
+}
+
+@media screen and (max-width: 430px) {
+
+    .book-content {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .navigation_panel {
+        flex-direction: column;
+    }
+    .search-block {
+        justify-content: flex-start;
+    }
+
+    .navigation ul {
+        display: flex;
+        flex-direction: column;
+    }
 }
